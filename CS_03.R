@@ -6,9 +6,11 @@
 
 ### Required Libraries ----
 install.packages('car')
+install.packages('ggplot2')
 install.packages('corrplot')
 install.packages('moments')
 library('car')
+library('ggplot2')
 library('corrplot')
 library('moments')
 
@@ -61,10 +63,10 @@ summary(data)
 ## Univariate Profiling (check each variable individually)
 # Categorical variables
 #check to sure that have good car distribution in each category
-table(data$FuelType)  # CNG cars sample size is very small -> 17/nrow(data1) < 0.05
+table(data$FuelType)  # CNG cars sample size is very small -> 17/nrow(data) < 0.05
 table(data$MetColor)
 table(data$Automatic)
-table(data$Doors)  # 2-door cars sample size is very small -> 2/nrow(data1) < 0.05
+table(data$Doors)  # 2-door cars sample size is very small -> 2/nrow(data) < 0.05
 
 data[data$Doors == 2,]  # abnormality (error in data recording process)
 
@@ -155,7 +157,7 @@ plot(m1)  # Diagnostic Plots
 
 #result: We see Heteroscedasticity problem in model
 
-plot(data1$KM, data1$Price)  # it seems that the relationship between these two variable in this sample and this data-range isn't linear, it is non-linear relationship 
+plot(data$KM, data$Price)  # it seems that the relationship between these two variable in this sample and this data-range isn't linear, it is non-linear relationship 
 #so, this model has problem. and t-test results of it are not reliable yet!
 
 # Train Simple Linear Regression Model 2 (Multivariate Regression)
@@ -380,7 +382,7 @@ head(test)
 dim(test)
 
 #Prediction
-test$pred <- predict(m4_3, data=test)  # input test data into m4_3 model (use model m4_3 to predict Price on Test dataset)
+test$pred <- predict(m4_3, test)  # input test data into m4_3 model (use model m4_3 to predict Price on Test dataset)
 head(test)
 
 #Evaluate model performance in Test dataset:
